@@ -64,7 +64,41 @@ export default function CheckoutPage() {
 
       const { error: itemsError } = await supabase.from('order_items').insert(orderItems);
       if (itemsError) throw itemsError;
+```ts
+// Build WhatsApp order message
+let itemsText = "";
 
+items.forEach((item, index) => {
+  const itemTotal = item.product.price * item.quantity;
+
+  itemsText += `${index + 1}. ${item.product.name}
+Qty: ${item.quantity}
+Price: Rs.${item.product.price}
+Total: Rs.${itemTotal}
+
+`;
+});
+
+const message = `🛒 *New Order*
+
+👤 Name: ${form.name}
+📞 Phone: ${form.phone}
+📍 Address: ${form.address}, ${form.city}
+
+💳 Payment Method: ${form.paymentMethod}
+
+🛍️ *Order Details:*
+${itemsText}
+
+💰 *Grand Total:* Rs.${grandTotal}`;
+
+const whatsappNumber = "923407690640";
+
+const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+window.open(whatsappUrl, "_blank");
+```
+  
       clearCart();
       setSuccess(true);
     } catch (err) {
