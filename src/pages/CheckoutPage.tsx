@@ -70,8 +70,7 @@ let itemsText = "";
 
 items.forEach((item, index) => {
   const itemTotal = item.product.price * item.quantity;
-
-  itemsText += `${index + 1}. ${item.product.name}
+itemsText += `${index + 1}. ${item.product.name}
 Qty: ${item.quantity}
 Price: Rs.${item.product.price}
 Total: Rs.${itemTotal}
